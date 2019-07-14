@@ -1,0 +1,56 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{forest}
+\begin{document}
+  \tikzset{
+    every label/.append style={font=\scriptsize},
+    my edge labels/.style={font=\scriptsize},
+    dominant/.append style={label=below:$dominant$},
+  }
+  \begin{forest}
+    for tree={
+      circle,
+      draw,
+      minimum width=2.5em,
+      l sep+=1.5em,
+      s sep+=1em,
+      anchor=center,
+      edge path={
+        \noexpand\path[\forestoption{edge}](!u.parent anchor)--(.child anchor)[my edge labels]\forestoption{edge label};
+      },
+    },
+    delay={
+      where n=1{
+        edge label/.wrap 2 pgfmath args={
+          node[midway, left]{$b_{#1}={#2}$}}{level}{n}
+      }{
+        edge label/.wrap 2 pgfmath args={
+          node[midway, right]{$b_{#1}={#2}$}}{level}{n}
+      },
+    }
+    [0, label={left:$L_2=L_3=3$}
+      [1
+        [2
+          [3
+            [4
+            ]
+            [12, label={below:$L_2=4$}
+            ]
+          ]
+          [,phantom]
+        ]
+        [13, s sep+=1.5em, label={right:$L_3=3$}
+          [{\phantom{a}}, dominant
+          ]
+          [14, label={below:$L_3=4$}
+          ]
+          [15, label={right:$L_3=3$}
+            [, dominant
+            ]
+            [16, label={right:$L_3=3$}
+            ]
+          ]
+        ]
+      ]
+    ]
+  \end{forest}
+\end{document}
