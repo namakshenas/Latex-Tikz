@@ -1,0 +1,46 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{forest}
+\tikzset{
+  dot/.style={circle,draw,inner sep=1.2,fill=black},
+}
+\begin{document}
+  \newcounter{mynode}
+  \setcounter{mynode}{0}
+  \renewcommand*\themynode{\alph{mynode}}
+  \begin{forest}
+    for tree={
+      if n children=0{label=right:$\dots$}{},
+      grow=0,
+      dot,
+      fit=band,
+      TeX={\stepcounter{mynode}},
+      name/.expanded={\themynode},
+      s sep+=5pt
+    }
+    [
+      [
+        [
+          [ ]
+          [ ]
+          [ ]
+        ]
+        [
+            [ ]
+            [ ]
+        ]
+      ]
+      [
+        [
+            [ ]
+            [ ]
+        ]
+        [
+          [ ]
+          [ ]
+          [ ]
+        ]
+      ]
+    ]
+    \foreach \i in {a,...,q} {\node [text=red, text opacity=.25, font=\tiny, yshift=-5pt] at (\i) {\i};};
+  \end{forest}
+\end{document}

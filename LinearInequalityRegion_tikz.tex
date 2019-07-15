@@ -1,0 +1,40 @@
+\documentclass[tikz,border=5pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.14}
+\usetikzlibrary{patterns}
+    \pgfdeclarepatternformonly[\LineSpace]{south west lines}
+    {\pgfqpoint{-0pt}{-0pt}}
+    {\pgfqpoint{\LineSpace}{\LineSpace}}
+    {\pgfqpoint{\LineSpace}{\LineSpace}}
+    {
+        \pgfsetlinewidth{.5pt}
+        \pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+        \pgfpathlineto{\pgfqpoint{\LineSpace + 0.1pt}{\LineSpace + 0.1pt}}
+        \pgfusepath{stroke}
+     }
+\newdimen\LineSpace
+\tikzset{
+    line space/.code={\LineSpace=#1},
+    line space=3pt
+}
+
+\begin{document}
+
+\begin{tikzpicture}[E/.style={font=\small,text=black, sloped, pos=0.84}]
+    \begin{axis}[
+axis line style=thin, axis lines=center,
+xmin=-5, xmax=7,
+ymin=-7, ymax=7,  
+ytick={-6,-4,...,6},
+xlabel=$x$, ylabel=$y$,
+grid=major,
+                    ]
+\path[pattern=south west lines, draw=red, pattern color=blue!40]
+(4,7) -- (11/5,8/5) -- (6.5,-7) -- (6.5,7) -- cycle;
+\draw[very thick, color=blue!50]
+    (-2/3,-7) -- (4.0, 7) node[E,above] {$y\leq  3x-5$}
+    (-0.5, 7) -- (6.5,-7) node[E,below] {$y\geq -2x+6$};
+    \end{axis}
+\end{tikzpicture}
+
+\end{document}

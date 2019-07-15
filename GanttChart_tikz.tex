@@ -1,0 +1,115 @@
+\documentclass{standalone}
+\usepackage{color}
+\usepackage{tikz}
+
+\usepackage{pgfgantt}
+%Used to draw gantt charts, which I will use for the calendar.
+%Let's define some awesome new ganttchart elements:
+\newganttchartelement{orangebar}{
+    orangebar/.style={
+        inner sep=0pt,
+        draw=red!66!black,
+        very thick,
+        top color=white,
+        bottom color=orange!80
+    },
+    orangebar label font=\slshape,
+    orangebar left shift=.1,
+    orangebar right shift=-.1
+}
+
+\newganttchartelement{bluebar}{
+    bluebar/.style={
+        inner sep=0pt,
+        draw=purple!44!black,
+        very thick,
+        top color=white,
+        bottom color=blue!80
+    },
+    bluebar label font=\slshape,
+    bluebar left shift=.1,
+    bluebar right shift=-.1
+}
+
+\newganttchartelement{greenbar}{
+    greenbar/.style={
+        inner sep=0pt,
+        draw=green!50!black,
+        very thick,
+        top color=white,
+        bottom color=green!80
+    },
+    greenbar label font=\slshape,
+    greenbar left shift=.1,
+    greenbar right shift=-.1
+}
+
+\begin{document}
+\begin{ganttchart}[
+    hgrid style/.style={black, dotted},
+    vgrid={*5{black,dotted}, *1{white, dotted}, *1{black, dashed}},
+    x unit=3mm,
+    y unit chart=9mm,
+    y unit title=12mm,
+    time slot format=isodate,
+    group label font=\bfseries \Large,
+    link/.style={->, thick}
+    ]{2014-09-22}{2014-12-21}
+    \gantttitlecalendar{year, month=name, week}\\
+
+    \ganttgroup[
+        group/.append style={fill=orange}
+    ]{IMKL Reader}{2014-09-22}{2014-11-9}\\ [grid]
+    \ganttorangebar[
+        name=Documentation
+    ]{Documentation}{2014-09-23}{2014-09-23}\\ [grid]
+    \ganttorangebar[
+        name=FMETutorial
+    ]{FME Tutorial}{2014-09-24}{2014-09-26}\\ [grid]
+    \ganttorangebar[
+        name=FME
+    ]{FME}{2014-09-30}{2014-10-03}
+    \ganttlinkedorangebar{}{2014-10-7}{2014-10-10}
+    \ganttlinkedorangebar{}{2014-10-14}{2014-10-15}
+    \ganttlinkedorangebar{}{2014-10-17}{2014-10-17}
+    \ganttlinkedorangebar[name=FMEend]{}{2014-10-21}{2014-10-24}
+    \ganttlinkedorangebar{}{2014-10-28}{2014-10-31}\\ [grid]
+    \ganttorangebar[name=Manual]{Manual}{2014-10-30}{2014-10-31}
+    \ganttlinkedorangebar{}{2014-11-4}{2014-11-7} \ganttnewline[thick, black]
+
+    \ganttgroup[
+        group/.append style={fill=blue}
+    ]{Test Cases}{2014-10-27}{2014-11-9}
+    \ganttgroup[
+        group/.append style={fill=blue}
+    ]{}{2014-11-17}{2014-12-19}\\ [grid]
+    \ganttbluebar{Innocent testing}{2014-10-30}{2014-10-31}
+    \ganttlinkedbluebar[name=Innocent]{}{2014-11-4}{2014-11-7}
+    \ganttlinkedbluebar{}{2014-12-4}{2014-12-5}
+    \ganttlinkedbluebar{}{2014-12-9}{2014-12-10}\\ [grid]
+    \ganttbluebar{Test Case Testing}{2014-11-6}{2014-11-7}
+    \ganttlinkedbluebar{}{2014-11-18}{2014-11-19}
+    \ganttlinkedbluebar{}{2014-11-24}{2014-11-27}
+    \ganttlinkedbluebar{}{2014-12-1}{2014-12-4}
+    \ganttlinkedbluebar{}{2014-12-10}{2014-12-10}
+    \ganttlinkedbluebar{}{2014-12-16}{2014-12-16}\\ [grid]
+    \ganttbluebar[name=Writing]{Writing}{2014-11-18}{2014-11-19}
+    \ganttlinkedbluebar{}{2014-11-24}{2014-11-28} 
+    \ganttlinkedbluebar{}{2014-12-4}{2014-12-4} 
+    \ganttlinkedbluebar{}{2014-12-10}{2014-12-10}
+    \ganttlinkedbluebar{}{2014-12-16}{2014-12-16}\ganttnewline[thick, black]
+
+    \ganttgroup[
+        group/.append style={fill=green}
+    ]{KLIP Manager}{2014-11-3}{2014-11-9}
+    \ganttgroup[
+        group/.append style={fill=green}
+    ]{}{2014-11-17}{2014-11-23}\\ [grid]
+    \ganttgreenbar{Manual}{2014-11-4}{2014-11-7}
+    \ganttlinkedgreenbar{}{2014-11-18}{2014-11-19}
+
+    %Implementing links
+    \ganttlink[link mid=0.75]{Documentation}{FME}
+    \ganttlink{FMETutorial}{FME}
+\end{ganttchart}
+\end{document}

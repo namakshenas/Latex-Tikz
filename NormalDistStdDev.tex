@@ -1,0 +1,36 @@
+\documentclass[tikz]{standalone}
+\usepackage{pgfplots}
+\usepackage{amssymb, amsmath}
+\usepackage{tikz}
+\usepackage{xcolor}
+\pgfplotsset{compat=1.7}
+\begin{document}
+\pgfmathdeclarefunction{gauss}{2}{\pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
+\begin{tikzpicture}
+\begin{axis}[no markers, domain=0:10, samples=100,
+axis lines*=left, xlabel=Standard deviations, ylabel=Frequency,,
+height=6cm, width=10cm,
+xtick={-3, -2, -1, 0, 1, 2, 3}, ytick=\empty,
+enlargelimits=false, clip=false, axis on top,
+grid = major]
+\addplot [fill=cyan!20, draw=none, domain=-3:3] {gauss(0,1)} \closedcycle;
+\addplot [fill=orange!20, draw=none, domain=-3:-2] {gauss(0,1)} \closedcycle;
+\addplot [fill=orange!20, draw=none, domain=2:3] {gauss(0,1)} \closedcycle;
+\addplot [fill=blue!20, draw=none, domain=-2:-1] {gauss(0,1)} \closedcycle;
+\addplot [fill=blue!20, draw=none, domain=1:2] {gauss(0,1)} \closedcycle;
+\addplot[] coordinates {(-1,0.4) (1,0.4)};
+\addplot[] coordinates {(-2,0.3) (2,0.3)};
+\addplot[] coordinates {(-3,0.2) (3,0.2)};
+\node[coordinate, pin={68.2\%}] at (axis cs: 0, 0.4){};
+\node[coordinate, pin={95\%}] at (axis cs: 0, 0.3){};
+\node[coordinate, pin={99.7\%}] at (axis cs: 0, 0.2){};
+\node[coordinate, pin={34.1\%}] at (axis cs: -0.5, 0){};
+\node[coordinate, pin={34.1\%}] at (axis cs: 0.5, 0){};
+\node[coordinate, pin={13.6\%}] at (axis cs: 1.5, 0){};
+\node[coordinate, pin={13.6\%}] at (axis cs: -1.5, 0){};
+\node[coordinate, pin={2.1\%}] at (axis cs: 2.5, 0){};
+\node[coordinate, pin={2.1\%}] at (axis cs: -2.5, 0){};
+\end{axis}
+\end{tikzpicture}
+\end{document}
